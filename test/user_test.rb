@@ -6,13 +6,10 @@ context :User do
   asserts_topic.size 1
   asserts(:login).equals "mytestuser"
   asserts(:name).equals "test user"
-  asserts_topic.size GitHub::User.properties.size
 
   context "first follower" do
     setup { topic.followers.first }
 
-    asserts_topic.size 3
-    asserts(:name)
-    asserts_topic.size GitHub::User.properties.size
+    asserts_topic.size 4
   end
 end
