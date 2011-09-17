@@ -1,13 +1,18 @@
 require File.expand_path('teststrap', File.dirname(__FILE__))
 
-context "User" do
+context :User do
   setup { GitHub.user("mytestuser") }
 
+  asserts_topic.size 1
   asserts(:login).equals "mytestuser"
+  asserts(:name).equals "test user"
+  asserts_topic.size GitHub::User.properties.size
 
+  context "first follower" do
+    setup { topic.followers.first }
 
-  context "followers" do
-    setup { topic.followers }
-    asserts_topic.size 1
+    asserts_topic.size 3
+    asserts(:name)
+    asserts_topic.size GitHub::User.properties.size
   end
 end

@@ -65,8 +65,8 @@ module GitHub
 
     # @return [Array<User>] users this user is following
     def following
-      json = get_json("#{API}/users/#{login}/following")
-      json.collect { |hash| User.new(hash) }
+      @following ||= get_json("#{API}/users/#{login}/followers").
+                     collect { |hash| User.new(hash) }
     end
 
     def [](prop)

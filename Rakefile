@@ -7,7 +7,7 @@ $LOAD_PATH.unshift File.expand_path('lib', File.dirname(__FILE__))
 
 require 'github'
 
-task :default => :test
+task :default => [:test]
 
 begin
   require 'yard'
@@ -18,7 +18,7 @@ rescue LoadError
 end
 
 Rake::TestTask.new do |t|
-    t.libs   << 'test'
+    t.libs << 'test'
     t.pattern = 'test/**/*_test.rb'
     t.verbose = false
 end

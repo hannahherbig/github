@@ -7,6 +7,8 @@ require 'github'
 GitHub.debug = true
 u = GitHub.user('mytestuser')
 u.name
-u.followers
 u.hireable?
+u.followers
+u.followers.first
+u.followers.first.name
 u
