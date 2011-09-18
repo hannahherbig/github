@@ -5,7 +5,8 @@ require 'rubygems'
 require 'github'
 
 GitHub.debug = true
-u = GitHub.user('mytestuser')
+
+u = GitHub.user('andrew12')
 u.name
 u.hireable?
 u.followers

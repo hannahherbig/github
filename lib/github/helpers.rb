@@ -3,9 +3,26 @@ require 'json'
 require 'open-uri'
 
 class Hash
-  # @return A new Mash with the contents of this Hash
+  # @return [Hashie::Mash] a new Mash with the contents of this Hash
   def to_mash
     Hashie::Mash.new(self)
+  end
+end
+
+class Hashie::Mash
+  # I hate to be nitpicky, but...
+  def inspect
+    ret = hashie_inspect
+    ret[0...2] = '#<'
+    ret
+  end
+end
+
+class Array
+  # @return [Array<Hashie::Mash>] the contents of this array converted to
+  #   Mashes.
+  def to_mash
+    collect { |inner| inner.to_mash }
   end
 end
 
@@ -19,22 +36,7 @@ module GitHub
     end
 
     def get_json(url)
-      JSON.parse(get(url))
-    end
-  end
-end
-
-module Hashie
-  module PrettyInspect
-    # The default looks like #<Object ...>, Hashie makes this look like
-    # <#Hashie::Mash ...>. Let's fix that.
-    def hashie_inspect
-      ret = "#<#{self.class.to_s}"
-      stringify_keys.keys.sort.each do |key|
-        ret << " #{key}=#{self[key].inspect}"
-      end
-      ret << ">"
-      ret
+      JSON.parse(get(url)).to_mash
     end
   end
 end
