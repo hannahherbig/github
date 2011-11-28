@@ -5,3 +5,5 @@ require 'rubygems'
 require 'riot'
 
 require 'github'
+
+GitHub.debug = true

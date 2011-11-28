@@ -1,6 +1,10 @@
-require 'hashie'
 require 'json'
 require 'open-uri'
+require 'time'
+
+require 'hashie'
+
+require 'github'
 
 class Hash
   # @return [Hashie::Mash] a new Mash with the contents of this Hash
@@ -9,20 +13,17 @@ class Hash
   end
 end
 
-class Hashie::Mash
-  # I hate to be nitpicky, but...
-  def inspect
-    ret = hashie_inspect
-    ret[0...2] = '#<'
-    ret
+class Array
+  # @return [Array<Hashie::Mash>] the contents of this array converted to
+  #   Mashes
+  def to_mash
+    collect { |inner| inner.to_mash }
   end
 end
 
-class Array
-  # @return [Array<Hashie::Mash>] the contents of this array converted to
-  #   Mashes.
-  def to_mash
-    collect { |inner| inner.to_mash }
+class String
+  def to_time
+    Time.parse(self)
   end
 end
 
