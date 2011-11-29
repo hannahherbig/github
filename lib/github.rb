@@ -1,4 +1,7 @@
-Dir["*/**.rb"].each { |fn| require fn[0...-3] } # XXX
+# XXX - don't do this kind of require
+%w(helpers base user org repo comment).each { |m| require "github/#{m}" }
+
+require 'hashie'
 
 module GitHub
   include GitHub::Helpers
